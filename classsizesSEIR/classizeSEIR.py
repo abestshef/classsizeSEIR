@@ -56,7 +56,12 @@ for classes in range(1,11):
     
     for reps in range(0,REPS):
 
-        # Assign population to houses/classes/sir
+        shuff1=np.arange(POPSIZE)
+        shuff2=np.arange(POPSIZE)
+
+        shuffle(shuff1)
+        shuffle(shuff2)
+
         PERSON=np.zeros((POPSIZE,4))
         # 0th col: ID 
         # 1st col: house
@@ -65,11 +70,16 @@ for classes in range(1,11):
         infs=np.sort(np.random.choice(POPSIZE,I0))
         for i in range(0,POPSIZE):
             PERSON[i][0] = i
-            PERSON[i][1] = randint(0,NOHOUSES-1)
-            PERSON[i][2] = randint(0,NOCLASSES-1)
             if i in infs:
                 PERSON[i][3] = 2 # Initially everyone susceptible except I0 individuals
 
+        for index in range(NOHOUSES):
+            for i in shuff1[index::NOHOUSES]:
+                PERSON[i][1]=index
+
+        for index in range(NOCLASSES):
+            for i in shuff2[index::NOCLASSES]:
+                PERSON[i][2]=index 
         # Some local constants / lists
         tsteps=[0]
         infecteds=[count_type(2)]
